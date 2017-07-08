@@ -1,0 +1,320 @@
+
+
+<!DOCTYPE html>
+<html >
+
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - ITCSS + BEM Quick Demo.</title>
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+  
+      <style>
+      h1, h2, h3, h4, h5, h6 {
+  font-size: 18px;
+  margin: 0;
+  font-weight: normal;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 1.125em;
+  line-height: 1.33333;
+  overflow-y: scroll;
+  min-height: 100%;
+}
+
+body {
+  color: #353535;
+}
+
+img {
+  max-width: 100%;
+  font-style: italic;
+  vertical-align: middle;
+}
+
+img[width],
+img[height] {
+  max-width: none;
+}
+
+p {
+  margin: 0;
+}
+p + p {
+  margin-top: 1em;
+}
+
+.aarpe-o-wrapper {
+  padding-right: 1em;
+  padding-left: 1em;
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 980px;
+}
+
+.aarpe-o-ratio {
+  position: relative;
+  display: block;
+}
+.aarpe-o-ratio:before {
+  content: "";
+  display: block;
+  width: 100%;
+  padding-bottom: 100%;
+}
+
+.aarpe-o-ratio__content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.aarpe-o-ratio--16x9:before {
+  padding-bottom: 56.25%;
+}
+
+.aarpe-o-media {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.aarpe-o-media__img {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+}
+
+.aarpe-o-media__body {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 0%;
+          flex: 1 1 0%;
+}
+
+.aarpe-o-triple-grid {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.aarpe-o-triple-grid__item {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 33.33%;
+          flex: 0 0 33.33%;
+  min-width: 16.66667em;
+  padding: 0.5em;
+}
+
+.aarpe-c-photo-card {
+  padding: 1em;
+  background-color: white;
+  border: 0.05556em solid lightgrey;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.aarpe-c-photo-card > * + * {
+  margin-top: 1em;
+  border-top: 0.05556em solid lightgrey;
+  padding-top: 1em;
+}
+
+.aarpe-c-photo-card__image {
+  background-size: cover;
+  background-position: center center;
+}
+
+.aarpe-c-photo-card__user-photo {
+  border-radius: 1000px;
+  margin-right: 1em;
+}
+
+.aarpe-c-photo-card__user-meta {
+  color: grey;
+}
+
+.aarpe-c-photo-card--user-info-last .aarp-c-photo-card__media {
+  -webkit-box-ordinal-group: 4;
+      -ms-flex-order: 3;
+          order: 3;
+}
+
+.aarpe-c-photo-card--user-info-first .aarp-c-photo-card__media {
+  -webkit-box-ordinal-group: 2;
+      -ms-flex-order: 1;
+          order: 1;
+  padding-top: 0;
+  margin-top: 0;
+  border-top: 0;
+  margin-bottom: 1em;
+  border-bottom: 0.05556em solid lightgrey;
+  padding-bottom: 1em;
+}
+.aarpe-c-photo-card--user-info-first > * {
+  -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+          order: 2;
+}
+
+.aarpe-c-hero {
+  background-color: lightgrey;
+  padding: 1em;
+}
+
+.aarpe-c-hero__content {
+  height: 40vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.aarpe-c-hero__subtitle {
+  color: grey;
+}
+
+.aarpe-u-text-hero {
+  font-size: 2.44444rem;
+  line-height: 2.66667rem;
+  font-weight: bold;
+}
+
+.aarpe-u-text-title {
+  font-size: 1.77778rem;
+  line-height: 2rem;
+}
+
+.aarpe-u-text-subtitle {
+  font-size: 1.33333rem;
+  line-height: 1.55556rem;
+}
+
+.aarpe-u-text-byline {
+  font-size: 0.72222rem;
+  line-height: 0.88889rem;
+}
+
+    </style>
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
+
+  
+  
+  <script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage("resize", "*");
+  }
+</script>
+
+</head>
+
+<body translate="no" >
+
+  <div class="aarpe-c-hero">
+  <div class="aarpe-o-wrapper aarpe-c-hero__content">
+    <h1 class="aarpe-u-text-hero">Look at all these Bills</h1>
+    <h2 class="aarpe-u-text-subtitle aarpe-c-hero__subtitle">So many.</h2>
+  </div>
+</div>
+
+<div class="aarpe-o-wrapper">
+  <div class="aarpe-o-triple-grid">
+    <div class="aarpe-o-triple-grid__item">
+      <!-- Photo Card -->
+      <div class="aarpe-c-photo-card">
+        <div class="aarpe-o-ratio aarpe-o-ratio--16x9">
+          <div class="aarpe-o-ratio__content aarpe-c-photo-card__image" style="background-image: url('https://www.fillmurray.com/g/300/200')">
+          </div>
+        </div>
+        <div class="aarpe-o-media aarp-c-photo-card__media">
+          <div class="aarpe-o-media__img">
+            <img class="aarpe-c-photo-card__user-photo" src="https://www.fillmurray.com/g/50/50" alt="">
+          </div>
+          <div class="aarpe-o-media__content">
+            <h2 class="aarpe-c-photo-card__user-name aarpe-u-text-title">Bill Murray</h2>
+            <span class="aarpe-c-photo-card__user-meta aarpe-u-text-byline">January 2, 2020</span>
+          </div>
+        </div>
+        <div class="aarpe-c-photo-card__content">
+          <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam id dolor id nibh ultricies vehicula ut id elit. Curabitur blandit tempus porttitor. Nullam quis risus eget urna mollis ornare vel eu leo. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nulla vitae elit libero, a pharetra augue.</p>
+        </div>
+      </div>
+      <!-- /Photo Card -->
+    </div>
+    <div class="aarpe-o-triple-grid__item">
+      <!-- Photo Card -->
+      <div class="aarpe-c-photo-card aarpe-c-photo-card--user-info-first">
+        <div class="aarpe-o-ratio aarpe-o-ratio--16x9">
+          <div class="aarpe-o-ratio__content aarpe-c-photo-card__image" style="background-image: url('https://www.fillmurray.com/g/300/200')">
+          </div>
+        </div>
+        <div class="aarpe-o-media aarp-c-photo-card__media">
+          <div class="aarpe-o-media__img">
+            <img class="aarpe-c-photo-card__user-photo" src="https://www.fillmurray.com/g/50/50" alt="">
+          </div>
+          <div class="aarpe-o-media__content">
+            <h2 class="aarpe-c-photo-card__user-name aarpe-u-text-title">Bill Murray</h2>
+            <span class="aarpe-c-photo-card__user-meta aarpe-u-text-byline">January 2, 2020</span>
+          </div>
+        </div>
+        <div class="aarpe-c-photo-card__content">
+          <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam id dolor id nibh ultricies vehicula ut id elit. Curabitur blandit tempus porttitor. Nullam quis risus eget urna mollis ornare vel eu leo. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nulla vitae elit libero, a pharetra augue.</p>
+        </div>
+      </div>
+      <!-- /Photo Card -->
+    </div>
+    <div class="aarpe-o-triple-grid__item">
+      <!-- Photo Card -->
+      <div class="aarpe-c-photo-card  aarpe-c-photo-card--user-info-last">
+        <div class="aarpe-o-ratio aarpe-o-ratio--16x9">
+          <div class="aarpe-o-ratio__content aarpe-c-photo-card__image" style="background-image: url('https://www.fillmurray.com/g/300/200')">
+          </div>
+        </div>
+        <div class="aarpe-o-media aarp-c-photo-card__media">
+          <div class="aarpe-o-media__img">
+            <img class="aarpe-c-photo-card__user-photo" src="https://www.fillmurray.com/g/50/50" alt="">
+          </div>
+          <div class="aarpe-o-media__content">
+            <h2 class="aarpe-c-photo-card__user-name aarpe-u-text-title">Bill Murray</h2>
+            <span class="aarpe-c-photo-card__user-meta aarpe-u-text-byline">January 2, 2020</span>
+          </div>
+        </div>
+        <div class="aarpe-c-photo-card__content">
+          <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam id dolor id nibh ultricies vehicula ut id elit. Curabitur blandit tempus porttitor. Nullam quis risus eget urna mollis ornare vel eu leo. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nulla vitae elit libero, a pharetra augue.</p>
+        </div>
+      </div>
+      <!-- /Photo Card -->
+    </div>
+  </div>
+</div>
+  <script src="dist/bem-health-check.js"></script>
+</body>
+
+</html>
+ 
