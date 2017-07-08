@@ -1,15 +1,35 @@
 'use strict';
 
 (function (bemHealthCheck) {
-  console.log('loaded');
-  var select = function select(selector) {
-    return document.querySelectorAll("[class*=\"" + selector + "\"]");
+  // console.log('loaded');
+  var select = function select(type) {
+    return function (selector) {
+      return document.body.querySelectorAll('[class' + type + '="' + selector + '"]');
+    };
   };
-  var objects = select("o-");
-  var components = select("c-");
-  var utilities = select("u-");
-  // const hack = select("_");
-  var bemElement = select("__");
-  var bemModifier = select("--");
-  console.log(bemElement);
+  var containsSelect = select('*');
+
+  var objects = containsSelect('o-');
+  var components = containsSelect('c-');
+  var utilities = containsSelect('u-');
+  var bemElement = containsSelect('__');
+  var bemModifier = containsSelect('--');
+
+  var outline = function outline(selector) {
+    return function (color) {
+      return selector.forEach(function (item) {
+        return item.setAttribute("style", 'outline: 1px solid ' + color + ';');
+      });
+    };
+  };
+
+  outline(objects)('purple');
+  outline(components)('blue');
+  outline(utilities)('orange');
+  outline(bemElement)('green');
+  outline(bemModifier)('yellow');
+
+  var createElement = function createElement(type) {
+    return document.createElement(type);
+  };
 })(window);
