@@ -1,72 +1,67 @@
 'use strict';
 
 (function (bemHealthCheck) {
+  var selectors = [{ type: 'objects', selector: 'o-', color: 'blue' }, { type: 'components', selector: 'c-', color: 'green' }, { type: 'utilities', selector: 'u-', color: 'orange' }, { type: 'bemElement', selector: '__', color: 'purple' }, { type: 'bemModifier', selector: '--', color: 'red' }];
 
+  // Creating things.
+  var tools = function tools(buttons) {
+    var tool = document.createElement("div");
+    tool.setAttribute('style', '\n    position: fixed;\n    bottom: 0;\n    left: 0;\n    right: 0;\n    background-color: black;\n    padding: .5rem;\n    ');
+
+    buttons.map(function (item) {
+      return tool.appendChild(item);
+    });
+    return tool;
+  };
+  var createButtons = function createButtons(id) {
+    return function (color) {
+      var el = document.createElement('button');
+      el.setAttribute('id', id);
+      el.innerHTML = id;
+      return el;
+    };
+  };
   var addOnClick = function addOnClick(id) {
     return function (func) {
       var el = document.getElementById(id);
       console.log(el);
-      el.onclick = func;
+      console.log(func);
+      el.onclick = func(id);
+      console.log(el.onclick);
     };
   };
-
-  // console.log('loaded');
-  var select = function select(type) {
+  var createStyleTag = function createStyleTag(type) {
     return function (selector) {
-      return document.body.querySelectorAll('[class' + type + '="' + selector + '"]');
+      return function (color) {
+        var el = document.createElement('style');
+        el.setAttribute('title', type);
+        el.innerHTML = '\n      [class*="' + selector + '"] {\n        outline: 2px solid ' + color + ';\n      };';
+        return el;
+      };
     };
   };
-  var containsSelect = select('*');
+  //iterating over things
+  var buttonTags = selectors.map(function (item) {
+    return createButtons(item.type)(item.color);
+  });
+  var styleTags = selectors.map(function (item) {
+    return createStyleTag(item.type)(item.selector)(item.color);
+  });
 
-  var objects = containsSelect('o-');
-  var components = containsSelect('c-');
-  var utilities = containsSelect('u-');
-  var bemElement = containsSelect('__');
-  var bemModifier = containsSelect('--');
-
-  var outline = function outline(selector) {
-    return function (color) {
-      return selector.forEach(function (item) {
-        if (!item.hasAttribute('style')) {
-          item.setAttribute('style', 'outline: 1px solid ' + color + ';');
-        } else {
-          item.removeAttribute('style');
-        }
-      });
-    };
+  var toggleStyleTag = function toggleStyleTag(id) {
+    var element = document.querySelector('[title="' + id + '"]');
+    if (element) {
+      element.parentNode.removeChild(element);
+    } else {
+      //add
+      // console.log('add triggered', element);
+    }
   };
 
-  var outlineObjects = function outlineObjects() {
-    return outline(objects)('purple');
-  };
-  var outlineComponents = function outlineComponents() {
-    return outline(components)('blue');
-  };
-  var outlineUtilities = function outlineUtilities() {
-    return outline(utilities)('orange');
-  };
-  var outlineElements = function outlineElements() {
-    return outline(bemElement)('green');
-  };
-  var outlineModifiers = function outlineModifiers() {
-    return outline(bemModifier)('yellow');
-  };
+  document.body.appendChild(tools(buttonTags));
 
-  var addTools = function addTools() {
-    var tool = document.createElement("div");
-    tool.setAttribute('style', '\n      position: fixed;\n      bottom: 0;\n      left: 0;\n      right: 0;\n      background-color: black;\n      padding: .5rem;\n    ');
-    tool.innerHTML = '\n      <button id="objects">Objects</button>\n      <button id="components">Components</button>\n      <button id="utilities">Utilities</button>\n      <button id="elements">BEM Elements</button>\n      <button id="modifiers">BEM Modifiers</button>\n    ';
-
-    var context = document.body;
-    document.body.appendChild(tool);
-    //add onClick
-  };
-
-  addTools();
-
-  addOnClick('objects')(outlineObjects);
-  addOnClick('components')(outlineComponents);
-  addOnClick('utilities')(outlineUtilities);
-  addOnClick('elements')(outlineElements);
-  addOnClick('modifiers')(outlineModifiers);
+  selectors.forEach(function (item) {
+    console.log(item.type);
+    addOnClick(item.type)(toggleStyleTag);
+  }); /* addOnClick(item.type)(toggleStyleTag(item.type */
 })(window);
