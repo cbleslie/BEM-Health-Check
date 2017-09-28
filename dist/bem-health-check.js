@@ -60,7 +60,6 @@
       var tag = styleTags.filter(function (tag) {
         return tag.elementName === id ? true : false;
       })[0].tag;
-      console.log(tag);
       document.head.appendChild(tag);
     }
   };

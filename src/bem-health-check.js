@@ -9,7 +9,7 @@
 
   // Creating things.
   const tools = buttons => {
-    let tool = document.createElement("div");
+    const tool = document.createElement("div");
     tool.setAttribute('style',`
       position: fixed;
       bottom: 0;
@@ -22,18 +22,18 @@
     return tool;
   };
   const createButtons = id => color => {
-    let el = document.createElement('button')
+    const el = document.createElement('button')
     el.setAttribute('id', id);
     el.innerHTML = id;
     return el;
   };
   const addOnClick = id => func => {
-    let el = document.getElementById(id);
+    const el = document.getElementById(id);
     el.onclick = () => func(id);
   };
   const createStyleTag = type => selector => color => {
-    let el = document.createElement('style');
-    let css = document.createTextNode(`
+    const el = document.createElement('style');
+    const css = document.createTextNode(`
       [class*="${selector}"] {
         outline: 2px solid ${color};
         position: relative;
@@ -67,12 +67,11 @@
   const styleTags = selectors.map(item => createStyleTag(item.type)(item.selector)(item.color));
 
   const toggleStyleTag = id => {
-    let element = document.querySelector(`[data-title="${id}"]`);
+    const element = document.querySelector(`[data-title="${id}"]`);
     if (element) {
       element.parentNode.removeChild(element);
     } else {
-      let tag = styleTags.filter(tag => (tag.elementName === id) ? true : false)[0].tag;
-      console.log(tag);
+      const tag = styleTags.filter(tag => (tag.elementName === id) ? true : false)[0].tag;
       document.head.appendChild(tag);
     }
   };
