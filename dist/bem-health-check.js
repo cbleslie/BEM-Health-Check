@@ -1,12 +1,12 @@
 'use strict';
 
 (function (bemHealthCheck) {
-  var selectors = [{ type: 'objects', selector: 'o-', color: 'blue' }, { type: 'components', selector: 'c-', color: 'green' }, { type: 'utilities', selector: 'u-', color: 'orange' }, { type: 'bemElement', selector: '__', color: 'purple' }, { type: 'bemModifier', selector: '--', color: 'red' }];
+  var selectors = [{ type: 'Object', selector: 'o-', color: 'blue' }, { type: 'Component', selector: 'c-', color: 'green' }, { type: 'Utility', selector: 'u-', color: 'orange' }, { type: 'Element', selector: '__', color: 'purple' }, { type: 'Modifier', selector: '--', color: 'red' }];
 
   // Creating things.
   var tools = function tools(buttons) {
     var tool = document.createElement("div");
-    tool.setAttribute('style', '\n    position: fixed;\n    bottom: 0;\n    left: 0;\n    right: 0;\n    background-color: black;\n    padding: .5rem;\n    ');
+    tool.setAttribute('style', '\n      position: fixed;\n      bottom: 0;\n      right: 0;\n      background-color: black;\n      padding: 5px;\n    ');
 
     buttons.map(function (item) {
       return tool.appendChild(item);
@@ -24,19 +24,23 @@
   var addOnClick = function addOnClick(id) {
     return function (func) {
       var el = document.getElementById(id);
-      console.log(el);
-      console.log(func);
-      el.onclick = func(id);
-      console.log(el.onclick);
+      el.onclick = function () {
+        return func(id);
+      };
     };
   };
   var createStyleTag = function createStyleTag(type) {
     return function (selector) {
       return function (color) {
         var el = document.createElement('style');
-        el.setAttribute('title', type);
-        el.innerHTML = '\n      [class*="' + selector + '"] {\n        outline: 2px solid ' + color + ';\n      };';
-        return el;
+        var css = document.createTextNode('\n      [class*="' + selector + '"] {\n        outline: 2px solid ' + color + ';\n        position: relative;\n      }\n      [class*="' + selector + '"]::before {\n        position: absolute;\n        display: inline;\n        content: \'' + type + '\';\n        bottom: 100%;\n        white-space: nowrap;\n        width: auto;\n        left: calc(0% - 3px);\n        font-size: 10px;\n        color: white;\n        background-color: ' + color + ';\n        padding: 7px;\n        line-height: 5px;\n        border-radius: 5px 5px 0 0;\n      }');
+        el.setAttribute('data-title', type);
+        el.type = 'text/css';
+        el.appendChild(css);
+        return {
+          elementName: type,
+          tag: el
+        };
       };
     };
   };
@@ -49,19 +53,21 @@
   });
 
   var toggleStyleTag = function toggleStyleTag(id) {
-    var element = document.querySelector('[title="' + id + '"]');
+    var element = document.querySelector('[data-title="' + id + '"]');
     if (element) {
       element.parentNode.removeChild(element);
     } else {
-      //add
-      // console.log('add triggered', element);
+      var tag = styleTags.filter(function (tag) {
+        return tag.elementName === id ? true : false;
+      })[0].tag;
+      console.log(tag);
+      document.head.appendChild(tag);
     }
   };
 
   document.body.appendChild(tools(buttonTags));
 
   selectors.forEach(function (item) {
-    console.log(item.type);
-    addOnClick(item.type)(toggleStyleTag);
+    return addOnClick(item.type)(toggleStyleTag);
   }); /* addOnClick(item.type)(toggleStyleTag(item.type */
 })(window);
